@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
     <VersionMajor>1</VersionMajor>
     <VersionMinor>0</VersionMinor>
-    <VersionPatch>0</VersionPatch>
+    <VersionPatch>1</VersionPatch>
     <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <FileVersion>$(VersionMajor).$([System.DateTime]::UtcNow.ToString(yy)).$([System.DateTime]::UtcNow.ToString(MMdd)).$([System.DateTime]::UtcNow.ToString(HHmm))</FileVersion>
@@ -25,7 +25,7 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0"/>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0" />
   </ItemGroup>
-  
+
   <Target Name="IncludeProjectReferences" DependsOnTargets="ResolveReferences">
     <ItemGroup>
       <IncludeBuildOutput />

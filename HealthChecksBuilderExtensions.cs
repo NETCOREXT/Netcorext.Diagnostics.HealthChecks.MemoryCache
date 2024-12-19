@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Netcorext.Diagnostics.HealthChecks.MemoryCache;
 
@@ -17,7 +18,11 @@ public static class HealthChecksBuilderExtensions
         if (factory == null) throw new ArgumentNullException(nameof(factory));
 
         return builder.Add(new HealthCheckRegistration(name ?? NAME + "-" + typeof(THealthChecker).Name,
-                                                       provider => (IHealthCheck)Activator.CreateInstance(typeof(THealthChecker), factory.Invoke(provider)),
+                                                       provider =>
+                                                       {
+                                                           var memoryCache = provider.GetRequiredService<IMemoryCache>();
+                                                           return (IHealthCheck)Activator.CreateInstance(typeof(THealthChecker), factory.Invoke(provider), memoryCache);
+                                                       },
                                                        failureStatus,
                                                        tags,
                                                        timeout));
